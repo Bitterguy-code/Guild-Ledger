@@ -1,0 +1,4 @@
+#TODO Create templates for all components. (Navbar, Char Drop Down, Char Sidebar, Inventory, buy/sell order display, history graph, watchlist viewer)
+#TODO Create templates for all pages. (Home, Login/Signup, API Key page, Character Management, About, Watchlist)
+#TODO Link pages via navbar
+#TODO Make basic market history
