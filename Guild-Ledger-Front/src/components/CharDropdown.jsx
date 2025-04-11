@@ -1,14 +1,17 @@
 import { Accordion } from "react-bootstrap";
 import Inventory from "./InventoryDropdown";
+import { useState } from "react";
 
-export default function CharDropdown(character) {
+export default function CharDropdown({ character }) {
+    const [activeKey, setActiveKey] = useState(null)
+    
     return (
-        <Accordion defaultActiveKey='0'>
-            <Accordion.Item eventKey="0">
-                <Accordion.Header> Char 1 </Accordion.Header>
+        <Accordion activeKey={ activeKey } onSelect={(key) => (setActiveKey(key))}>
+            <Accordion.Item eventKey="character">
+                <Accordion.Header>{character.name}</Accordion.Header>
                 <Accordion.Body>
-                    Money: 123
                     Buy/Sell Orders
+                    <br />
                     <Inventory character={character} />
                 </Accordion.Body>
             </Accordion.Item>

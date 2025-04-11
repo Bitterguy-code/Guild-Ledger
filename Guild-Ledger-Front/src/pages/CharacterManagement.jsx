@@ -1,16 +1,22 @@
 import axios from 'axios';
 import fakedata from '../fakedata.json'
 import { PureComponent } from 'react';
-import { Accordion } from 'react-bootstrap';
+import CharDropdown from '../components/CharDropdown';
 
 
-export default class CharacterManagement extends PureComponent {
-    render() {
-        {
-            fakedata.map((character, index) => {
-                <Accordion>
-                    <Accordion.Header>{character.name}</Accordion.Header>
-                </Accordion>
-        })}
-    }
+export default function CharacterManagement()  {
+
+        
+    return (
+        <>
+        {fakedata.character.map((character, index) => (
+            <div key={index}>
+                <p> Hewwo </p>
+                <CharDropdown character={character} />
+            </div>
+            ))}
+        </>
+            )
+
+    
 }

@@ -1,34 +1,35 @@
 {
-"character":
-    {
-        "name": "Bob",
-        "inventory":
-        [{
-            "name": "Strong Soft Wood Longbow of Fire",
-            "rarity": "Masterwork",
-            "vendor_value": 120,
-            "id": 28445,
-            "icon": "https://render.guildwars2.com/file/C6110F52DF5AFE0F00A56F9E143E9732176DDDE9/65015.png",
-            "buy": {
-                "amount": 5,
-                "price": 4000
-            },
-            "sell" : {}    
+"account_money": 123456,
+"character":[{
+    "name": "Bob",
+    "inventory":
+    [{
+        "name": "Strong Soft Wood Longbow of Fire",
+        "rarity": "Masterwork",
+        "vendor_value": 120,
+        "id": 28445,
+        "icon": "https://render.guildwars2.com/file/C6110F52DF5AFE0F00A56F9E143E9732176DDDE9/65015.png",
+        "buy": {
+            "amount": 5,
+            "price": 4000
         },
-        {
-            "name": "Sealed Package of Snowballs",
-            "rarity": "Basic",
-            "vendor_value": 0,
-            "id": 24,
-            "icon": "https://render.guildwars2.com/file/1D05D1EE04E16E69710E1EAB11AC466BBF105778/219347.png",
-            "buy": {
+        "sell" : {}    
+    },
+    {
+        "name": "Sealed Package of Snowballs",
+        "rarity": "Basic",
+        "vendor_value": 0,
+        "id": 24,
+        "icon": "https://render.guildwars2.com/file/1D05D1EE04E16E69710E1EAB11AC466BBF105778/219347.png",
+        "buy": {
 
-            },
-            "sell": {
-                "amount": 10,
-                "price": 200000
-            }
-          }]
-        
-    }
+        },
+        "sell": {
+            "amount": 10,
+            "price": 200000
+        }
+      }]
+    
+}]
+    
 }

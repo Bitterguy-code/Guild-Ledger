@@ -1,46 +1,69 @@
-import { PureComponent } from "react";
+import { PureComponent, useState } from "react";
 import { Accordion, Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
-import Currency from './utils'
+import {Currency} from './utils'
 
 
 function itemTooltip(item) {
-    const value = Currency(item.price)
-    const renderTooltip = (item) => {
-        <Tooltip id="item-tooltip" {...item}>
+    const value = Currency(item.vendor_value);
+    const buyValue = item.buy ? Currency(item.buy.price) : null;
+    const sellValue = item.sell ? Currency(item.sell.price) : null;
+
+    return(
+        <Tooltip id="item-tooltip">
             {item.name}
             <br />
             Vendor: {value.gold}g {value.silver}s {value.copper}c
-            {item.buy ? buyValue = Currency(item.buy.price) & <br /> & <p>Buy: {item.buy.amount} @ {buyValue.gold}g {buyValue.silver}s {buyValue.copper}c</p> : pass}
-            {item.sell ? sellValue = Currency(item.sell.price) & <br /> & <p>Buy: {item.sell.amount} @ {sellValue.gold}g {sellValue.silver}s {sellValue.copper}c</p>: pass}
-        </Tooltip>
-    }
+            {item.buy.amount && (
+                <>
+                    <br />
+                    Buy: {item.buy.amount} @ {buyValue.gold}g {buyValue.silver}s {buyValue.copper}c
+                </>
+            )}
 
-    return(renderTooltip)
+            {item.sell.amount && (
+                <>
+                    <br />
+                    Sell: {item.sell.amount} @ {sellValue.gold}g {sellValue.silver}s {sellValue.copper}c
+                </>
+            )}
+            
+        </Tooltip>
+    )
+
 }
 
-export default function Inventory (character) {
-    return() => {
-        <Accordion>
-            <Container fluid>
-                <Row>
-                    {character.inventoy.map((item, index) => {
-                        {const itemTooltip = itemTooltip(item)}
-                        <OverlayTrigger
-                            placement="right"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={itemTooltip}
-                        >
-                            <Col>
-                                <img
-                                    src={item.icon}
-                                    width="100"
-                                    height="100"
-                                />
-                            </Col>
-                        </OverlayTrigger>
-                    })}
-                </Row>
-            </Container>
+export default function Inventory({ character }) {
+    const [activeKey, setActiveKey] = useState(null)
+    return(
+        <Accordion
+            activeKey={ activeKey }
+            onSelect={(key) => (setActiveKey(key))}
+        >
+            <Accordion.Item eventKey="0">
+                <Accordion.Header>Inventory</Accordion.Header>
+                <Accordion.Body>
+                    <Container fluid>
+                        <Row className="g-2 flex-nowrap overflow-auto">
+                            {character.inventory.map((item, index) => (
+                            
+                                <OverlayTrigger key={index}
+                                    placement="right"
+                                    delay={{ show: 125, hide: 200 }}
+                                    overlay={itemTooltip(item)}
+                                >
+                                    <Col key={index} xs="auto">
+                                        <img
+                                            src={item.icon}
+                                            width="64"
+                                            height="64"
+                                        />
+                                    </Col>
+                                </OverlayTrigger>
+                            ))}
+                        </Row>
+                        </Container>
+                    </Accordion.Body>
+                </Accordion.Item>
         </Accordion>
-    }
+    )
 }
