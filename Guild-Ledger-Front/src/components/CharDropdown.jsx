@@ -1,6 +1,7 @@
 import { Accordion } from "react-bootstrap";
 import Inventory from "./InventoryDropdown";
 import { useState } from "react";
+import OrderDropdown from "./OrderDropdown";
 
 export default function CharDropdown({ character }) {
     const [activeKey, setActiveKey] = useState(null)
@@ -10,7 +11,7 @@ export default function CharDropdown({ character }) {
             <Accordion.Item eventKey="character">
                 <Accordion.Header>{character.name}</Accordion.Header>
                 <Accordion.Body>
-                    Buy/Sell Orders
+                    <OrderDropdown character={character} />
                     <br />
                     <Inventory character={character} />
                 </Accordion.Body>

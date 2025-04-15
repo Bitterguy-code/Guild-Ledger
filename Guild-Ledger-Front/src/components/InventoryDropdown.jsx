@@ -3,37 +3,46 @@ import { Accordion, Col, Container, OverlayTrigger, Row, Tooltip } from "react-b
 import {Currency} from './utils'
 
 
-function itemTooltip(item) {
-    const value = Currency(item.vendor_value);
-    const buyValue = item.buy ? Currency(item.buy.price) : null;
-    const sellValue = item.sell ? Currency(item.sell.price) : null;
-
+function itemTooltip(item, orders) {
+    const vendorValue = Currency(item.vendor_value);
+    let sellAmount = 0
+    let buyAmount = 0
+    let orderPrice = 0
+    
+    for (let order in orders) {
+        if (item.name === orders[order].name) {
+            buyAmount = orders[order].buy
+            sellAmount = orders[order].sell
+            orderPrice = Currency(orders[order].price)
+        }       
+    }
+        
     return(
         <Tooltip id="item-tooltip">
             {item.name}
             <br />
-            Vendor: {value.gold}g {value.silver}s {value.copper}c
-            {item.buy.amount && (
+            Vendor: {vendorValue.gold}g {vendorValue.silver}s {vendorValue.copper}c
+            {buyAmount > 0 && (
                 <>
                     <br />
-                    Buy: {item.buy.amount} @ {buyValue.gold}g {buyValue.silver}s {buyValue.copper}c
-                </>
-            )}
-
-            {item.sell.amount && (
-                <>
-                    <br />
-                    Sell: {item.sell.amount} @ {sellValue.gold}g {sellValue.silver}s {sellValue.copper}c
+                    Buy: {buyAmount} @ {orderPrice.gold}g {orderPrice.silver}s {orderPrice.copper}c
                 </>
             )}
             
+            {sellAmount > 0 && (
+                <>
+                    <br />
+                    Sell: {sellAmount} @ {orderPrice.gold}g {orderPrice.silver}s {orderPrice.copper}c
+                </>
+            )}
         </Tooltip>
     )
-
 }
+
 
 export default function Inventory({ character }) {
     const [activeKey, setActiveKey] = useState(null)
+    const orders = character.orders
     return(
         <Accordion
             activeKey={ activeKey }
@@ -49,7 +58,7 @@ export default function Inventory({ character }) {
                                 <OverlayTrigger key={index}
                                     placement="right"
                                     delay={{ show: 125, hide: 200 }}
-                                    overlay={itemTooltip(item)}
+                                    overlay={itemTooltip(item, orders)}
                                 >
                                     <Col key={index} xs="auto">
                                         <img
