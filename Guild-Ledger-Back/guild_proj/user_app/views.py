@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
     HTTP_204_NO_CONTENT,
 )
@@ -45,7 +46,7 @@ class Log_out(APIView):
     
     def post(self, request):
         request.user.auth_token.delete()
-        return Response(status=204) 
+        return Response(status=HTTP_204_NO_CONTENT) 
     
     # def post(self,request):
     #     request.user.auth_token.delete()
@@ -79,4 +80,4 @@ class Set_API_Key(APIView):
             
             return JsonResponse({'success': True})
         except Exception as e:
-            return JsonResponse({'error': str(e)}, status = 400)
+            return JsonResponse({'error': str(e)}, status = HTTP_400_BAD_REQUEST)
