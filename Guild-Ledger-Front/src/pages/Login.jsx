@@ -10,7 +10,7 @@ import { UserContext } from '../contexts/userContext';
 const LogIn = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setUser } = useContext(UserContext)
+    const { user,setUser } = useContext(UserContext)
     const navigate = useNavigate()
 
     const handleSubmit = async (event) => {
@@ -27,6 +27,7 @@ const LogIn = () => {
     return (
         <>
             <h1>Login</h1>
+            {console.log({user})}
             <Form
                 onSubmit={handleSubmit}
             >
