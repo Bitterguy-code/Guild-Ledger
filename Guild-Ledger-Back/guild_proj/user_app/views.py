@@ -71,12 +71,10 @@ class Set_API_Key(APIView):
             })
         
         try:
+            user = request.user
             data = json.loads(request.body)
-            api_key = data.get('api_key')
-            serializer = UserSerializer(data = api_key)
-            
-            if serializer.is_valid():
-                serializer.save()
+            user.APIKey = data.get('api_key')
+            user.save()
             
             return JsonResponse({'success': True})
         except Exception as e:

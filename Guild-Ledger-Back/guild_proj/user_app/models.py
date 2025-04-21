@@ -7,6 +7,7 @@ class User(AbstractUser):
     username = models.TextField(unique=True)
     email = models.EmailField(unique=True)
     APIKey = models.TextField(null=True, unique=True)
+    money = models.IntegerField(null=True)
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []

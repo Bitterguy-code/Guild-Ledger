@@ -1,4 +1,5 @@
 from django.db import models
+from character_app.models import Character
 
 # Create your models here.
 class Item(models.Model):
@@ -7,6 +8,7 @@ class Item(models.Model):
     vendor_value = models.IntegerField()
     game_id = models.IntegerField()
     icon = models.URLField()
+    character = models.ManyToManyField(Character, related_name='items', null=True)
     today_buy = models.IntegerField(null=True)
     minus_one_buy = models.IntegerField(null=True)
     minus_three_buy = models.IntegerField(null=True)

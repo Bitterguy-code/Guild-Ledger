@@ -12,29 +12,29 @@ class UserSerializer(serializers.ModelSerializer):
             )
         ]
     )
-    email = serializers.EmailField(
-        required = True,
-        validators = [
-            UniqueValidator(
-                queryset= User.objects.all(),
-                message="Email already in use"
-            )
-        ]
-    )
+    # email = serializers.EmailField(
+    #     required = True,
+    #     validators = [
+    #         UniqueValidator(
+    #             queryset= User.objects.all(),
+    #             message="Email already in use"
+    #         )
+    #     ]
+    # )
     
-    APIKey = serializers.CharField(
-        required = False,
-        validators = [
-            UniqueValidator(
-                queryset=User.objects.all(),
-                message="API Key already in use"
-            )
-        ]
-    )
+    # APIKey = serializers.CharField(
+    #     required = False,
+    #     validators = [
+    #         UniqueValidator(
+    #             queryset=User.objects.all(),
+    #             message="API Key already in use"
+    #         )
+    #     ]
+    # )
     
     class Meta:
         model = User
-        fields = ['username', 'character']
+        fields = ['username', 'characters']
         extra_kwargs = {'password': {'write_only':True}}
         
     def create(self, validated_data):
