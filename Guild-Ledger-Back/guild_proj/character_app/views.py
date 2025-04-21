@@ -2,13 +2,10 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_503_SERVICE_UNAVAILABLE
-from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 import requests
 from .models import Character
 from .serializers import CharacterSerializer
-from user_app.models import User
-from user_app.serializers import UserSerializer
 from item_app.models import Item
 from urllib.parse import quote
 import json
@@ -62,16 +59,6 @@ class CharacterListView(APIView):
                     },
                     status=HTTP_400_BAD_REQUEST
                 )
-                # try:
-                #     gw2_error = response.json()
-                # except json.JSONDecodeError:
-                #     gw2_error = response.text
-                # return Response(
-                #     {'error':'Failed to fetched characters.',
-                #      'gw2_api_error': gw2_error,
-                #      'status_code': response.status_code},
-                #     status=HTTP_400_BAD_REQUEST
-                # )
             
             characters = response.json()
             for character in characters:

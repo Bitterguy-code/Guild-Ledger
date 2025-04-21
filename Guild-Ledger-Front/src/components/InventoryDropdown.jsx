@@ -3,19 +3,12 @@ import { Accordion, Col, Container, OverlayTrigger, Row, Tooltip } from "react-b
 import {Currency} from './utils'
 
 
-function itemTooltip(item, orders) {
+function itemTooltip(item) {
     const vendorValue = Currency(item.vendor_value);
     let sellAmount = 0
     let buyAmount = 0
     let orderPrice = 0
     
-    for (let order in orders) {
-        if (item.name === orders[order].name) {
-            buyAmount = orders[order].buy
-            sellAmount = orders[order].sell
-            orderPrice = Currency(orders[order].price)
-        }       
-    }
         
     return(
         <Tooltip id="item-tooltip">
@@ -52,13 +45,13 @@ export default function Inventory({ character }) {
                 <Accordion.Header>Inventory</Accordion.Header>
                 <Accordion.Body>
                     <Container fluid>
-                        <Row className="g-2 flex-nowrap overflow-auto">
-                            {character.inventory.map((item, index) => (
+                        <Row className="g-2 flex-wrap overflow-auto">
+                            {character.items.map((item, index) => (
                             
                                 <OverlayTrigger key={index}
                                     placement="right"
                                     delay={{ show: 125, hide: 200 }}
-                                    overlay={itemTooltip(item, orders)}
+                                    overlay={itemTooltip(item)}
                                 >
                                     <Col key={index} xs="auto">
                                         <img

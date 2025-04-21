@@ -91,3 +91,19 @@ export const userLogOut = async () => {
     }
     alert("Logout failed")
 }
+
+export const characterList = async () => {
+    let response = await api.get('character/list/',
+        {
+            headers: {
+                'Authorization': `Token ${localStorage.getItem('token')}`
+            }
+        }
+    )
+
+    if (response.status == 200) {
+        return response
+    } else {
+        return [response.error, response.status]
+    }
+}

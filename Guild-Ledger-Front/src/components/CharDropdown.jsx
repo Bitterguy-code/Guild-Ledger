@@ -11,7 +11,7 @@ export default function CharDropdown({ character }) {
             <Accordion.Item eventKey="character">
                 <Accordion.Header>{character.name}</Accordion.Header>
                 <Accordion.Body>
-                    <OrderDropdown character={character} />
+                    {/* <OrderDropdown character={character} /> */}
                     <br />
                     <Inventory character={character} />
                 </Accordion.Body>
