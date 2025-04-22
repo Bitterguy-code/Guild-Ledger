@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_503_SERVICE_UNAVAILABLE
@@ -13,6 +14,8 @@ import json
 
 # Create your views here.
 class CharacterView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     def get(self, request, character_id):
         character = Character.objects.get(id=character_id)
         serializer = CharacterSerializer(character)
@@ -37,6 +40,7 @@ class CharacterView(APIView):
         
 class CharacterListView(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     def get(self, request):
         user = request.user
         

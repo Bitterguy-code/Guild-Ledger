@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
@@ -29,13 +30,18 @@ class Sign_up(APIView):
             
         
 class Log_in(APIView):
+    permission_classes = [AllowAny]
     def post(self,request):
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key, "user": user.username})
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "access":str(refresh.access_token),
+                "refresh":str(refresh),
+                "user":user.username
+            })
         else:
             return Response("No user matching those credentials", status=HTTP_404_NOT_FOUND)
  

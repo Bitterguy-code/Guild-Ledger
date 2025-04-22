@@ -9,11 +9,11 @@ class WatchlistItemSerializer(ModelSerializer):
     
     class Meta:
         model = Watchlist_item
-        fields = ['id','item', 'sell_point', 'buy_point']
+        fields = ['id','item','item_id', 'sell_point', 'buy_point']
         
 class WatchlistSerializer(ModelSerializer):
     watchlist_items = WatchlistItemSerializer(many=True, read_only=True)
     
     class Meta:
         model = Watchlist
-        fields = ['watchlist_items']
+        fields = ['id','watchlist_items']
