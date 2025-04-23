@@ -73,7 +73,7 @@ const GW2KeyForm = () => {
             </h3>
             <h4>
                 Please include the following permissions
-                <ul>
+                <ul style={{ listStyleType: "none", paddingLeft: 0 }}>
                     <li>Inventories</li>
                     <li>Characters</li>
                     <li>Wallet</li>

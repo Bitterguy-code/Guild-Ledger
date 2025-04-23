@@ -40,10 +40,11 @@ export default function Inventory({ character }) {
         <Accordion
             activeKey={ activeKey }
             onSelect={(key) => (setActiveKey(key))}
+            className="gw2-accordion"
         >
-            <Accordion.Item eventKey="0">
-                <Accordion.Header>Inventory</Accordion.Header>
-                <Accordion.Body>
+            <Accordion.Item eventKey="0" className="border-0">
+                <Accordion.Header><span className="accordion-title">Inventor</span>y</Accordion.Header>
+                <Accordion.Body className="p-2">
                     <Container fluid>
                         <Row className="g-2 flex-wrap overflow-auto">
                             {character.items.map((item, index) => (

@@ -48,8 +48,8 @@ const SearchBar = ({onItemSelect}: SearchBarProps) => {
     }
 
     return (
-        <div className="search-container">
-            <InputGroup>
+        <div className="gw2-searchbar">
+            <InputGroup className='search-input'>
                 <Form.Control
                     type='search'
                     placeholder="Search items..."

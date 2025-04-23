@@ -9,9 +9,9 @@ export default function OrderDropdown({ character }) {
     
     return(
         <>
-        <Accordion activeKey={ activeKey } onSelect={(key) => (setActiveKey(key))}>
+        <Accordion activeKey={ activeKey } onSelect={(key) => (setActiveKey(key))} className="gw2-accordion">
             <Accordion.Item eventKey="character">
-                <Accordion.Header>Orders</Accordion.Header>
+                <Accordion.Header className="accordion-header">Orders</Accordion.Header>
                 <Accordion.Body>
 
                             {orders.map((order) => {

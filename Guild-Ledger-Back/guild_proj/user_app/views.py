@@ -1,22 +1,17 @@
 from django.contrib.auth import authenticate
-from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-from django.middleware.csrf import get_token
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import (
-    HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND,
     HTTP_204_NO_CONTENT,
 )
-from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from .serializers import UserSerializer
-from .models import User
 import json
 
 # Create your views here.
@@ -53,10 +48,7 @@ class Log_out(APIView):
     def post(self, request):
         request.user.auth_token.delete()
         return Response(status=HTTP_204_NO_CONTENT) 
-    
-    # def post(self,request):
-    #     request.user.auth_token.delete()
-    #     return Response(status=HTTP_204_NO_CONTENT)
+
     
 class Info(APIView):
     authentication_classes = [TokenAuthentication]

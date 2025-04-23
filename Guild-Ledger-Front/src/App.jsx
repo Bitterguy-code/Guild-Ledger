@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import './gw2-theme.css'
 import {Outlet} from 'react-router-dom'
 import GLNavbar from './components/Navbar'
-import {UserContext, UserProvider} from './contexts/userContext'
+import {UserProvider} from './contexts/userContext'
 import axios from 'axios'
 
 

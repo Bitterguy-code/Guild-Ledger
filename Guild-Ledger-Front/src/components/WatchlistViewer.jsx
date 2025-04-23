@@ -139,14 +139,15 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
     return (
         <Accordion activeKey={outerAccordionKey}
             onSelect={handleOuterToggle}
+            className="gw2-accordion"
             alwaysOpen>
-            <Accordion.Item eventKey="character">
-                <Accordion.Header>{character.name}</Accordion.Header>
+            <Accordion.Item eventKey="character" className="border-0">
+                <Accordion.Header><span className="accordion-title">{character.name}</span></Accordion.Header>
                 <Accordion.Body>
-                    <Accordion activeKey={innerAccordionKeys} onSelect={handleInnerAccordionToggle}  alwaysOpen flush>
-                        <Accordion.Item eventKey="view">
-                            <Accordion.Header>View</Accordion.Header>
-                            <Accordion.Body>
+                    <Accordion activeKey={innerAccordionKeys} onSelect={handleInnerAccordionToggle}  alwaysOpen flush className="gw2-accordion">
+                        <Accordion.Item eventKey="view" className="border-0">
+                            <Accordion.Header><span className="accordion-title">View</span></Accordion.Header>
+                            <Accordion.Body className="p-2">
                                 {localWatchlist.watchlist_items?.map((item) => {
                                     const name = item.item.name
                                     const icon = item.item.icon
@@ -177,9 +178,9 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
                                 }
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="modify">
-                            <Accordion.Header>Add/Modify</Accordion.Header>
-                            <Accordion.Body>
+                        <Accordion.Item eventKey="modify" className="border-0">
+                            <Accordion.Header><span className="accordion-title">Add/Modify</span></Accordion.Header>
+                            <Accordion.Body className="p-2">
                                 <SearchBar onItemSelect={handleItemSelect} />
 
                                 {selectedItem && (<Form onSubmit={handleSubmit}>

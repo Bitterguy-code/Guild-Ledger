@@ -7,9 +7,9 @@ export default function CharDropdown({ character }) {
     const [activeKey, setActiveKey] = useState(null)
     
     return (
-        <Accordion activeKey={ activeKey } onSelect={(key) => (setActiveKey(key))}>
+        <Accordion activeKey={ activeKey } onSelect={(key) => (setActiveKey(key))} className="gw2-accordion">
             <Accordion.Item eventKey="character">
-                <Accordion.Header>{character.name}</Accordion.Header>
+                <Accordion.Header className="accordion-header">{character.name}</Accordion.Header>
                 <Accordion.Body>
                     {/* <OrderDropdown character={character} /> */}
                     <br />

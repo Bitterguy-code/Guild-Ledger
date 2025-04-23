@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "../api";
 import { Navigate } from "react-router-dom";
-const navigate = Navigate
+
 
 
 export const Currency = (value) => {
@@ -95,6 +95,7 @@ export const userLogOut = async () => {
     })
     if (response.status === 204) {
         localStorage.removeItem("user")
+        localStorage.removeItem('refresh_token')
         return null
     }
     alert("Logout failed")

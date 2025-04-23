@@ -1,6 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { characterList } from '../components/utils';
 import WatchlistViewer from '../components/WatchlistViewer';
+import { NewtonsCradle } from 'ldrs/react'
+import 'ldrs/react/NewtonsCradle.css'
 
 
 export default function watchlist() {
@@ -38,7 +40,12 @@ export default function watchlist() {
     }, [])
 
     if (loading) {
-        return <div>Loading</div>
+        return <div>
+        <NewtonsCradle
+          size="78"
+          speed="1.4"
+          color="black" 
+        /></div>
     }
         
     
