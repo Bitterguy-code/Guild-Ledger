@@ -35,7 +35,7 @@ function itemTooltip(item) {
 
 export default function Inventory({ character }) {
     const [activeKey, setActiveKey] = useState(null)
-    const orders = character.orders
+
     return(
         <Accordion
             activeKey={ activeKey }

@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import {Outlet} from 'react-router-dom'
 import GLNavbar from './components/Navbar'
-import {UserContext} from './contexts/userContext'
+import {UserContext, UserProvider} from './contexts/userContext'
 import axios from 'axios'
 
 
@@ -33,10 +33,10 @@ function App() {
   }, [user])
 
   return (
-    <UserContext.Provider value={{ user, setUser}}>
+    <UserProvider>
       <GLNavbar />
       <Outlet />
-    </UserContext.Provider>
+    </UserProvider>
   )
 }
 

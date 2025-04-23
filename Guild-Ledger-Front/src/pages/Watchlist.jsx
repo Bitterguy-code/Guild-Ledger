@@ -1,6 +1,64 @@
-export default function Watchlist() {
+import { useContext, useEffect, useState } from 'react';
+import { characterList } from '../components/utils';
+import WatchlistViewer from '../components/WatchlistViewer';
 
-    return <div className='main-page-contents'>
-        <h2>Watchlist</h2>
-    </div>;
+
+export default function watchlist() {
+    const [loading, setLoading] = useState(true)
+    const [characters, setCharacters] = useState([])
+    const [error, setError] = useState(null)
+    const [refreshCount, setRefreshCount] = useState(0)
+
+    const refreshCharacters = async () => {
+        const response = await characterList()
+        setCharacters(response.data)
+        setRefreshCount(prev => prev + 1)
+    }
+
+    useEffect(() => {
+        const fetchCharacters = async () => {
+            try {
+                const response = await characterList()
+                console.log(response)
+                if (response.data) {
+                    if (Array.isArray(response.data)) {
+                        setCharacters(response.data)
+                    } else {
+                        setError('Invalid data format')
+                    }
+                    
+                } else {
+                    setError('No characters found')
+                }
+            
+            } catch (err) {
+                setError(err.message || "Failed to load characters")
+            } finally {
+                setLoading(false)
+            }
+        }; fetchCharacters()
+    }, [])
+
+    if (loading) {
+        return <div>Loading</div>
+    }
+        
+    
+    if (error) {
+        return <div>Error {error}</div>
+    }
+
+    return (
+        <>
+        {characters.map((character) => (
+            <div key={character.id}>
+                <WatchlistViewer
+                    key = {`${character.id}-${refreshCount}`}
+                    character={character}
+                    refreshCharacters={refreshCharacters} />
+            </div>
+            ))}
+        </>
+            )
+
 }

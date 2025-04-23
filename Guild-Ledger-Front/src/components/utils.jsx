@@ -1,8 +1,11 @@
 import axios from "axios";
 import api from "../api";
+import { Navigate } from "react-router-dom";
+const navigate = Navigate
 
 
 export const Currency = (value) => {
+    if (!value) return { gold:0, silver:0, copper:0}
     const copper = value % 100;
     const silver = Math.floor(value / 100) % 100;
     const gold = Math.floor(value / 10000);
@@ -60,15 +63,21 @@ export const userRegistration = async (userData) => {
 
 export const userLogIn = async (username, password) => {
     try {
-        let response = api.post("/user/login/", {
-            username: username,
-            password: password
-        })
+        const response = await api.post("/user/login/", {
+            username, password
+        }, { withCredentials: true })
+        const userData = {
+            username: response.data.user,
+            token: response.data.access
+        }
         
-            let { user, token } = (await response).data
-            localStorage.setItem("token", token)
-            axios.defaults.headers.common["Authorization"] = `Token ${token}`
-            return user
+        localStorage.setItem('user', JSON.stringify(userData))
+        localStorage.setItem("access_token", response.data.access)
+        localStorage.setItem('refresh_token', response.data.refresh)
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.access}`
+            
+        return response.data.user
         
     } catch (error) {
         console.error("Login error:", error)
@@ -85,8 +94,7 @@ export const userLogOut = async () => {
         }
     })
     if (response.status === 204) {
-        localStorage.removeItem("token")
-        delete api.defaults.headers.common["Authorization"]
+        localStorage.removeItem("user")
         return null
     }
     alert("Logout failed")
