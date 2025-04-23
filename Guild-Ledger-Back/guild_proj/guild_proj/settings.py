@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-h9tsnbx4kts#otnnu=m&))cq$q8&by1-h)+%u%se#!wy6j=+f@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost','[::1]',]
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    
     'corsheaders',
     'user_app',
     'character_app',
@@ -151,3 +152,12 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_EXPOSE_HEADERS = ['Authorization', 'Content-Type'
 ]
+
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}

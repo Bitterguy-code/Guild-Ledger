@@ -14,7 +14,7 @@ class Watchlist_manager(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     def get(self, request):
-        watchlist, created = Watchlist.objects.get_or_create(Character=request.character)
+        watchlist, created = Watchlist.objects.select_related('character').prefetch_related('watchlist_items__item').get(character=request.character)
         serializer = WatchlistSerializer(watchlist)
         response_data  = serializer.data
 

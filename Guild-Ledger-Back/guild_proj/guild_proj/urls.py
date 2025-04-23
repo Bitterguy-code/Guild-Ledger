@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/refresh/', TokenRefreshView.as_view()),
     path('api/user/', include("user_app.urls")),
     path('api/character/', include("character_app.urls")),
     path('api/items/', include("item_app.urls")),
-    path('api/watchlist/', include('watchlist_app.urls'))
+    path('api/watchlist/', include('watchlist_app.urls')),
+    
 ]

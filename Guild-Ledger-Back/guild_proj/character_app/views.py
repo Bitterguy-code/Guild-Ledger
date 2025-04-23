@@ -17,7 +17,7 @@ class CharacterView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     def get(self, request, character_id):
-        character = Character.objects.get(id=character_id)
+        character = Character.objects.select_related('watchlist').prefetch_related('items').get(id=character_id)
         serializer = CharacterSerializer(character)
         response_data = serializer.data
         

@@ -7,12 +7,10 @@ export default function watchlist() {
     const [loading, setLoading] = useState(true)
     const [characters, setCharacters] = useState([])
     const [error, setError] = useState(null)
-    const [refreshCount, setRefreshCount] = useState(0)
 
     const refreshCharacters = async () => {
         const response = await characterList()
         setCharacters(response.data)
-        setRefreshCount(prev => prev + 1)
     }
 
     useEffect(() => {
@@ -53,7 +51,7 @@ export default function watchlist() {
         {characters.map((character) => (
             <div key={character.id}>
                 <WatchlistViewer
-                    key = {`${character.id}-${refreshCount}`}
+                    key = {character.id}
                     character={character}
                     refreshCharacters={refreshCharacters} />
             </div>

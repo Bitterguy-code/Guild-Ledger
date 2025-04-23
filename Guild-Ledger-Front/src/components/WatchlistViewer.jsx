@@ -7,13 +7,38 @@ import { propTypes } from "react-bootstrap/esm/Image";
 
 
 export default function WatchlistViewer({ character, refreshCharacters }) {
-    const [activeCharacterKey, setActiveCharacterKey] = useState(null)
-    const [activeSectionKey, setActivSectioneKey] = useState([])
     const [selectedItem, setSelectedItem] = useState(null)
     const [formData, setFormData] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [localWatchlist, setLocalWatchlist] = useState(character.watchlist)
-    const watchlist = character.watchlist
+    const [outerAccordionKey, setOuterAccordionKey] = useState()
+    const [innerAccordionKeys, setInnerAccordionKeys] = useState([])
+
+    const handleOuterToggle = (key) => {
+        setOuterAccordionKey(key)
+    }
+
+    const handleInnerAccordionToggle = (key) => {
+        console.log("Inner accordion toggle:", key)
+        console.log("Current innerAccordionKeys: ", innerAccordionKeys)
+        if (Array.isArray(key)) {
+            console.log("setting inner accordion key directly to: ", key)
+            setInnerAccordionKeys(key)
+        }
+        setInnerAccordionKeys(prev => {
+            const newKeys = prev.includes(key) ? 
+            prev.filter(k => k !== key) : 
+            [...prev, key];
+        console.log("New innerAccordionKeys:", newKeys);
+        return newKeys;
+        }
+        )
+    }
+
+    const handleRefresh = async () => {
+        await refreshCharacters()
+        
+    }
 
     useEffect(() => {
         setLocalWatchlist(character.watchlist)
@@ -21,19 +46,20 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
 
     const getTextColor = (set, yesterday, action) => {
         if (action === 'buy') {
-            if (set < yesterday) {
+            if (set > yesterday) {
                 return 'text-success'
             } else {
                 return 'text-primary'
             }
         } else if (action === 'sell') {
-            if (set > yesterday) {
+            if (set < yesterday) {
                 return 'text-success'
             } else {
                 return 'text-primary'
             }
         }
     }
+
     const handleItemSelect = async (item) => {
         try {
             setSelectedItem(item)
@@ -41,10 +67,12 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
             console.error('Error loading history: ', error)
         }
     }
+
     const handleChange = (e) => {
         const value = e.target.value === '' ? 0 : Number(e.target.value)
         setFormData({...formData, [e.target.name]:value})
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
@@ -60,8 +88,8 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
             const sellSilver = formData.sell_silver || 0
             const sellCopper = formData.sell_copper || 0
 
-            const buy_point = buyGold * 10000 + buySilver * 1000 + buyCopper
-            const sell_point = sellGold * 10000 + sellSilver * 1000 + sellCopper
+            const buy_point = buyGold * 10000 + buySilver * 100 + buyCopper
+            const sell_point = sellGold * 10000 + sellSilver * 100 + sellCopper
     
             console.log("buy_point", buy_point)
             console.log("sell_point",sell_point)
@@ -74,16 +102,11 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
                 }
             )
             if (response.status === 200) {
-                setFormData({})
-                setSelectedItem(null)
-                refreshCharacters()
-                console.log('Update successful:', response.data)
+                await handleRefresh()
             } 
         } catch (error) {
             console.error('Update failed:', error.response?.data)
             console.log('Form data: ', formData)
-            console.log("buy_point", buy_point)
-            console.log("sell_point",sell_point)
         } finally {
             setIsSubmitting(false)
     }
@@ -91,6 +114,8 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
         
           
     }
+
+
     
     const handleDelete = async(character, watchlist_item) => {
         const response = await api.delete(`watchlist/delete/${watchlist_item.id}/`, {
@@ -99,7 +124,7 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
 
         
         if (response.status === 200) {
-            refreshCharacters()
+            await handleRefresh()
             console.log(response['success'])
         } else {
             console.error(response['error'])
@@ -112,11 +137,13 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
     
     
     return (
-        <Accordion activeKey={activeCharacterKey} onSelect={(key) => (setActiveCharacterKey(key))}>
+        <Accordion activeKey={outerAccordionKey}
+            onSelect={handleOuterToggle}
+            alwaysOpen>
             <Accordion.Item eventKey="character">
                 <Accordion.Header>{character.name}</Accordion.Header>
                 <Accordion.Body>
-                    <Accordion activeKey={activeSectionKey} onSelect={(key) => (setActivSectioneKey(key))} alwaysOpen flush>
+                    <Accordion activeKey={innerAccordionKeys} onSelect={handleInnerAccordionToggle}  alwaysOpen flush>
                         <Accordion.Item eventKey="view">
                             <Accordion.Header>View</Accordion.Header>
                             <Accordion.Body>
