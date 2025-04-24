@@ -1,7 +1,5 @@
 import axios from "axios";
 import api from "../api";
-import { Navigate } from "react-router-dom";
-
 
 
 export const Currency = (value) => {

@@ -3,7 +3,6 @@ import { Accordion, Row, Col, Form, Button } from "react-bootstrap";
 import SearchBar from "./searchbar";
 import api from "../api";
 import { Currency } from "./utils";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 
 export default function WatchlistViewer({ character, refreshCharacters }) {
@@ -76,9 +75,7 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
-
-        
-        
+   
         try {
             console.log(formData)
             const buyGold = formData.buy_gold || 0
@@ -109,10 +106,7 @@ export default function WatchlistViewer({ character, refreshCharacters }) {
             console.log('Form data: ', formData)
         } finally {
             setIsSubmitting(false)
-    }
-
-        
-          
+    }         
     }
 
 
