@@ -6,7 +6,11 @@
 
 A comprehensive trading post management system for Guild Wars 2, providing real-time market insights and inventory management.
 
-![Guild Ledger Preview](https://imgur.com/a/sSFhSii)
+![Guild Ledger Home Page Preview](https://i.imgur.com/pf55bF9.png)
+![Guild Ledger API Page Preview](https://i.imgur.com/4pwO9HN.png)
+![Guild Ledger Character Page Preview](https://imgur.com/9kyrWbE.png)
+![Guild Ledger Watchlist Page Preview](https://imgur.com/aNXHqbm.png)
+
 
 ## Features
 
